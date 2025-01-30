@@ -169,3 +169,30 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     <!-- Add canonical link if needed -->
     <link rel="canonical" href="https://www.yourwebsite.com">
 </head>
+<!-- Add Stripe Checkout Button -->
+<button id="stripe-checkout" style="padding: 10px; background-color: #333; color: white; border: none; cursor: pointer;">
+    Pay with Stripe
+</button>
+
+<!-- Add Stripe Script -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe('your-publishable-key-here');
+
+    document.getElementById('stripe-checkout').addEventListener('click', async () => {
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ items: cart }),
+        });
+
+        const session = await response.json();
+        const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+        if (result.error) {
+            alert(result.error.message);
+        }
+    });
+</script>
