@@ -1,7 +1,3 @@
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    alert('Thank you for contacting us! We will get back to you soon.');
-});
 // Shopping Cart Simulation
 let cart = [];
 
@@ -12,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('view-cart').addEventListener('click', viewCart);
+    document.getElementById('checkout').addEventListener('click', checkout);
 });
 
 function addToCart(event) {
@@ -21,6 +18,7 @@ function addToCart(event) {
 
     cart.push({ name: productName, price: productPrice });
     alert(`${productName} added to cart!`);
+    updateCartCount();
 }
 
 function viewCart() {
@@ -33,6 +31,20 @@ function viewCart() {
         });
         alert(cartContent);
     }
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty.');
+    } else {
+        alert('Proceeding to checkout...');
+        // Redirect to checkout page or payment gateway
+    }
+}
+
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    cartCount.innerText = cart.length;
 }
 
 // Contact Form Submission
